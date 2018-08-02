@@ -1,5 +1,5 @@
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.*;
 
@@ -12,6 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriverException;
 
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -25,14 +26,14 @@ public class TestSteps {
         WebDriver driver = new FirefoxDriver(); // Web driver seçildi
 
         driver.get("https://www.n11.com/"); // Site açıldı
-        //WebElement mainPage=driver.findElement(By.xpath("//*[@id='header']/div/h1/a/img"));
+
+        WebDriverWait wait = new WebDriverWait(driver, 20);
 
         //////////////////////// 1. STEP
         System.out.println("-------Step 1-------");
 
-        String expectedTitleMainPage= "n11.com - Alışverişin Uğurlu Adresi"; //olması gereken başlık elementi tanımlandı
         try{
-            Assert.assertEquals(expectedTitleMainPage,driver.getTitle());
+            Assert.assertEquals("n11.com - Alışverişin Uğurlu Adresi",driver.getTitle());
             System.out.println("---Mainpage is succesfully opened---");
         }
         catch(InputMismatchException e){
@@ -46,13 +47,6 @@ public class TestSteps {
         buttonLogin.click();
         System.out.println("--Button is clicked--");
 
-        //expected strings
-        String expectedTitlePage = "Giriş Yap - n11.com";
-        String expectedTitleLoginBox = "Üye Girişi";
-        String expectedTitleEmail = "E-Posta Adresi";
-        String expectedTitlePass = "Şifre";
-        String expectedTitleLoginButton = "Üye Girişi";
-        String expectedTitleFacebookButton = "Facebook ile Giriş";
 
         //get strings
         String getTitlePage=driver.getTitle();
@@ -63,17 +57,17 @@ public class TestSteps {
         String getTitleFacebookButton = driver.findElement(By.xpath("//*[@id='loginForm']/div[4]")).getText();
 
         try{
-            Assert.assertEquals(expectedTitlePage,getTitlePage );
+            Assert.assertEquals("Giriş Yap - n11.com",getTitlePage );
             System.out.println("--Main title is checked--");
-            Assert.assertEquals(expectedTitleLoginBox,getTitleLoginBox);
+            Assert.assertEquals("Üye Girişi",getTitleLoginBox);
             System.out.println("--Login box Title is checked--");
-            Assert.assertEquals(expectedTitleEmail,getTitleEmail);
+            Assert.assertEquals("E-Posta Adresi",getTitleEmail);
             System.out.println("--Email box title is checked--");
-            Assert.assertEquals(expectedTitlePass,getTitlePass );
+            Assert.assertEquals("Şifre",getTitlePass );
             System.out.println("--Password box title is checked--");
-            Assert.assertEquals(expectedTitleLoginButton,getTitleLoginButton );
+            Assert.assertEquals("Üye Girişi",getTitleLoginButton );
             System.out.println("--Login button is checked--");
-            Assert.assertEquals(expectedTitleFacebookButton,getTitleFacebookButton );
+            Assert.assertEquals("Facebook ile Giriş",getTitleFacebookButton );
             System.out.println("--Facebook button is checked--");
 
             System.out.println("---Login Page is correctly opened---");
@@ -96,32 +90,13 @@ public class TestSteps {
         buttonMemberLogin.click();
 
 
-
-       //Expected
-        String expectedTitleMyAccount = "Hesabım";
-        String expectedTitleMyName = "Yusuf Sar";
-        String expectedTitleOrder = "Mevcut Sipariş";
-        String expectedTitleWishList = "İstek Listem / Favorilerim";
-        String expectedTitleCancel = "İptal/Değişim/İade";
-        String expectedTitleCoupons = "Kuponlarım";
-        String expectedTitleGarage = "Garajım";
-        String expectedTitlePoints = "Puanlarım";
-        String expectedTitleQuestions = "Soru ve Cevaplar";
-        String expectedTitleInfoUpdate = "Bilgi Güncelleme";
-        String expectedTitleExit = "Çıkış Yap";
-
-
         WebDriver driver2 = driver;
         Actions act = new Actions(driver2); //hesabım menüsü açılması için
 
-
-
+        act.moveToElement(driver2.findElement(By.xpath("//*[@class='myAccountHolder customMenuItem hasMenu  withLocalization ']"))).perform(); ////hesabım menüsü açılması için
         //Get
         String getTitleMyAccount = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[1]")).getText();
         String getTitleMyName = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[2]")).getText();
-
-        act.moveToElement(driver2.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]"))).perform(); ////hesabım menüsü açılması için
-
         String getTitleOrder = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[2]/div/a[1]")).getText();
         String getTitleWishList = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[2]/div/a[2]")).getText();
         String getTitleCancel = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[2]/div/a[3]")).getText();
@@ -132,28 +107,30 @@ public class TestSteps {
         String getTitleInfoUpdate = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[2]/div/a[8]")).getText();
         String getTitleExit = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[2]/div/a[9]")).getText();
 
+
+
         try{
-            Assert.assertEquals(expectedTitleMyAccount,getTitleMyAccount );
+            Assert.assertEquals("Hesabım",getTitleMyAccount );
             System.out.println("--Hesabım test edildi--");
-            Assert.assertEquals(expectedTitleMyName,getTitleMyName);
+            Assert.assertEquals("Yusuf Sar",getTitleMyName);
             System.out.println("--İsim ve soyisim test edildi--");
-            Assert.assertEquals(expectedTitleOrder,getTitleOrder);
+            Assert.assertEquals("Mevcut Sipariş",getTitleOrder);
             System.out.println("--Siparişlerim test edildi--");
-            Assert.assertEquals(expectedTitleWishList,getTitleWishList );
+            Assert.assertEquals("İstek Listem / Favorilerim",getTitleWishList );
             System.out.println("--İstek listesi test edildi--");
-            Assert.assertEquals(expectedTitleCancel,getTitleCancel );
+            Assert.assertEquals("İptal/Değişim/İade",getTitleCancel );
             System.out.println("--İptal, Değişim test edildi--");
-            Assert.assertEquals(expectedTitleCoupons,getTitleCoupons );
+            Assert.assertEquals("Kuponlarım",getTitleCoupons );
             System.out.println("--Kuponlarım test edildi--");
-            Assert.assertEquals(expectedTitleGarage,getTitleGarage );
+            Assert.assertEquals("Garajım",getTitleGarage );
             System.out.println("--Garajım test edildi --");
-            Assert.assertEquals(expectedTitlePoints,getTitlePoints );
+            Assert.assertEquals("Puanlarım",getTitlePoints );
             System.out.println("--Puanlarım test edildi--");
-            Assert.assertEquals(expectedTitleQuestions,getTitleQuestions );
+            Assert.assertEquals("Soru ve Cevaplar",getTitleQuestions );
             System.out.println("--Sorular ve cevaplar test edildi--");
-            Assert.assertEquals(expectedTitleInfoUpdate,getTitleInfoUpdate );
+            Assert.assertEquals("Bilgi Güncelleme",getTitleInfoUpdate );
             System.out.println("--Bilgi Güncelleme test edildi--");
-            Assert.assertEquals(expectedTitleExit,getTitleExit );
+            Assert.assertEquals("Çıkış Yap",getTitleExit );
             System.out.println("--Çıkış test edildi--");
 
             System.out.println("---Kullanıcı başarılı bir şekilde giriş yaptı---");
@@ -175,16 +152,14 @@ public class TestSteps {
         /////////////////////// 5.STEP
         System.out.println("-------Step 5-------");
 
-        String expectedPageTitle = driver.getTitle();
-        String expectedResultofSearch= driver.findElement(By.xpath("//*[@id='contentListing']/div/div/div[2]/section[2]/div[1]/div[1]")).getText();
-
-        String getPageTitle = "Samsung - n11.com";
+        String getPageTitle = driver.getTitle();
+        String getResultofSearch= driver.findElement(By.xpath("//*[@id='contentListing']/div/div/div[2]/section[2]/div[1]/div[1]")).getText();
 
         try {
-            Assert.assertEquals(expectedPageTitle,getPageTitle);
+            Assert.assertEquals("Samsung - n11.com",getPageTitle);
             System.out.println("--Title test edildi--");
 
-            if(expectedResultofSearch.contains("Samsung") && expectedResultofSearch.contains("için") && expectedResultofSearch.contains("sonuç bulundu.")) {
+            if(getResultofSearch.contains("Samsung") && getResultofSearch.contains("için") && getResultofSearch.contains("sonuç bulundu.")) {
                 System.out.println("--Arama sonuçları test edildi--");
             }
         }
@@ -217,9 +192,11 @@ public class TestSteps {
         driver.findElement(By.xpath("//*[@id='contentListing']/div/div/div[2]/div[3]/a[2]")).click();
         String getTitlePage2 = driver.getTitle();
 
-        //String getPageNumber = driver.findElement(By.xpath("//a[@href='https://www.n11.com/arama?q=samsung&pg=2' and contains(@class, 'active')]")).getText();
-        //System.out.println(getPageNumber);
-        //a[@href='https://www.n11.com/arama?q=samsung&pg=2' and contains(@class, 'active')]
+        String getPageNumber = driver.findElement(By.xpath("//*[@class='pagination']/a[@class='active ']")).getText();
+        Assert.assertTrue("2".equals(getPageNumber));       //2.sayfada olunduğunu kontrol ediyor
+
+        String getValue = driver.findElement(By.xpath("//*[@class='pageInfo']/input[@class='currentPage']")).getAttribute("value");
+        Assert.assertTrue("2".equals(getValue));     //Sağ alt köşedekeki sayfa sayısının 2 olduğunu kontrol ediyor.
 
         try {
             if(getTitlePage2.contains("Samsung - n11.com - 2")){
@@ -230,6 +207,7 @@ public class TestSteps {
         catch (InputMismatchException e){
 
         }
+
         /////////////////////// 7.STEP
         System.out.println("-------Step 7-------");
 
@@ -246,25 +224,6 @@ public class TestSteps {
         System.out.println("-------Step 8-------");
         driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[1]")).click();
         System.out.println("--Hesabım'a tıklandı--");
-
-
-
-        String expectedTitleOrder1 = "Mevcut Sipariş";
-        String expectedTitleCancel1 = "İptal/Değişim/İade";
-        String expectedTitleCoupons1 = "Kuponlarım";
-        String expectedTitleGarage1 = "Garajım";
-        String expectedTitlePoints1 = "Puanlarım";
-        String expectedTitleWishList1 = "İstek Listelerim";
-        String expectedTitleComments1 = "Yorumlarım";
-        String expectedTitleQuestions1 = "Ürün Sorularım";
-        String expectedTitleInfoMember1 = "Üyelik Bilgilerim";
-        String expectedTitleAddres1 = "Adreslerim";
-        String expectedTitleChangePass1 = "Şifre Değiştir";
-        String expectedTitleMemberCancel1 = "Üyelik İptali";
-
-        String expectedMyOrders = "Siparişlerim";
-        String expectedTickets = "Biletlerim";
-        String expectedName= "Yusuf Sar";
 
 
 
@@ -285,38 +244,39 @@ public class TestSteps {
         String getMyOrders = driver.findElement(By.xpath("//*[@id='myAccount']/div[3]/div[1]/ul/li[1]/a")).getText();
         String getMyTickets = driver.findElement(By.xpath("//*[@id='myAccount']/div[3]/div[1]/ul/li[2]/a")).getText();
         String getName = driver.findElement(By.xpath("//*[@id='myAccount']/div[1]/div[1]/div[1]/strong")).getText();
+
         try{
 
-            Assert.assertEquals(expectedTitleOrder1,getTitleOrder1);
+            Assert.assertEquals("Mevcut Sipariş",getTitleOrder1);
             System.out.println("--Mevcut Sipariş test edildi--");
-            Assert.assertEquals(expectedTitleCancel1,getTitleCancel1 );
+            Assert.assertEquals("İptal/Değişim/İade",getTitleCancel1 );
             System.out.println("--İptal, Değişim test edildi--");
-            Assert.assertEquals(expectedTitleCoupons1,getTitleCoupons1 );
+            Assert.assertEquals("Kuponlarım",getTitleCoupons1 );
             System.out.println("--Kuponlarım test edildi--");
-            Assert.assertEquals(expectedTitleGarage1,getTitleGarage1 );
+            Assert.assertEquals("Garajım",getTitleGarage1 );
             System.out.println("--Garajım test edildi --");
-            Assert.assertEquals(expectedTitlePoints1,getTitlePoints1 );
+            Assert.assertEquals("Puanlarım",getTitlePoints1 );
             System.out.println("--Puanlarım test edildi--");
-            Assert.assertEquals(expectedTitleWishList1,getTitleWishList1 );
+            Assert.assertEquals("İstek Listelerim",getTitleWishList1 );
             System.out.println("--İstek listesi test edildi--");
-            Assert.assertEquals(expectedTitleComments1,getTitleComments1 );
+            Assert.assertEquals("Yorumlarım",getTitleComments1 );
             System.out.println("--Yorumlarım test edildi--");
-            Assert.assertEquals(expectedTitleQuestions1,getTitleQuestions1 );
+            Assert.assertEquals("Ürün Sorularım",getTitleQuestions1 );
             System.out.println("--Sorular ve cevaplar test edildi--");
-            Assert.assertEquals(expectedTitleInfoMember1,getTitleInfoMember1 );
+            Assert.assertEquals("Üyelik Bilgilerim",getTitleInfoMember1 );
             System.out.println("--Bilgi Güncelleme test edildi--");
-            Assert.assertEquals(expectedTitleAddres1,getTitleAddress1 );
+            Assert.assertEquals("Adreslerim",getTitleAddress1 );
             System.out.println("--Adreslerim test edildi--");
-            Assert.assertEquals(expectedTitleChangePass1,getTitleChangePass1 );
+            Assert.assertEquals("Şifre Değiştir",getTitleChangePass1 );
             System.out.println("--Şifre Değiştirme test edildi--");
-            Assert.assertEquals(expectedTitleMemberCancel1,getTitleMemberCancel1 );
+            Assert.assertEquals("Üyelik İptali",getTitleMemberCancel1 );
             System.out.println("--Üyelik İptali test edildi--");
 
-            Assert.assertEquals(expectedMyOrders,getMyOrders);
+            Assert.assertEquals("Siparişlerim",getMyOrders);
             System.out.println("--Siparişlerim test edildi--");
-            Assert.assertEquals(expectedTickets,getMyTickets);
+            Assert.assertEquals("Biletlerim",getMyTickets);
             System.out.println("--Biletlerim test edildi--");
-            Assert.assertEquals(expectedName,getName);
+            Assert.assertEquals("Yusuf Sar",getName);
             System.out.println("--İsim Soyisim test edildi--");
 
 
@@ -338,18 +298,15 @@ public class TestSteps {
         myFavorites.click();
         System.out.println("--Favorilerime tıklandı--");
 
-        String expectedTitleMyFavs = "Favorilerim - n11.com";
-        String expectedSubTitle= "Favorilerim";
-
         String getTitleMyFavs = driver.getTitle();
         String getSubTitle = driver.findElement(By.xpath("//*[@id='myAccount']/div[3]/div[1]/h2")).getText();
 
         // CLASS ACTIVE OLAYINI EKLEYEBİLİRİM
 
         try {
-            Assert.assertEquals(expectedTitleMyFavs,getTitleMyFavs);
+            Assert.assertEquals("Favorilerim - n11.com",getTitleMyFavs);
             System.out.println("--Title test edildi--");
-            Assert.assertEquals(expectedSubTitle,getSubTitle);
+            Assert.assertEquals("Favorilerim",getSubTitle);
             System.out.println("--Subitle test edildi--");
 
             System.out.println("---Favorilerim ekranı açıldığı onaylandı---");
@@ -406,7 +363,6 @@ public class TestSteps {
         catch (InputMismatchException e){
 
         }
-
 
     }
 
