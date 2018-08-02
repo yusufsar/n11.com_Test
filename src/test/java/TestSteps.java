@@ -153,7 +153,7 @@ public class TestSteps {
         System.out.println("-------Step 5-------");
 
         String getPageTitle = driver.getTitle();
-        String getResultofSearch= driver.findElement(By.xpath("//*[@id='contentListing']/div/div/div[2]/section[2]/div[1]/div[1]")).getText();
+        String getResultofSearch= driver.findElement(By.xpath("//*[@class='resultText ']")).getText();
 
         try {
             Assert.assertEquals("Samsung - n11.com",getPageTitle);
@@ -336,9 +336,6 @@ public class TestSteps {
         /////////////////////// 11.STEP
         System.out.println("-------Step 11-------");
         WebElement x = driver.findElement(By.xpath("//div[@id='view' and @class='listView']/ul/li/div/div/a"));
-        Boolean c;
-
-
 
         try {
             List<WebElement> elementList = driver.findElements(By.xpath("//div[@class='group listingGroup wishListGroup']/div"));
@@ -358,7 +355,6 @@ public class TestSteps {
             else {
                 System.out.println("--Ürünün kaldırılamadı--");
             }
-
         }
         catch (InputMismatchException e){
 
