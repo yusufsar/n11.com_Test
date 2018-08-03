@@ -27,7 +27,7 @@ public class TestSteps {
 
         driver.get("https://www.n11.com/"); // Site açıldı
 
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 8);
 
         //////////////////////// 1. STEP
         System.out.println("-------Step 1-------");
@@ -43,10 +43,11 @@ public class TestSteps {
         /////////////////////// 2.STEP
         System.out.println("-------Step 2-------");
 
-        WebElement buttonLogin = driver.findElement(By.xpath("//*[@title='Giriş Yap']"));
+        WebElement buttonLogin = driver.findElement(By.xpath("//*[@class='btnSignIn']"));
         buttonLogin.click();
         System.out.println("--Button is clicked--");
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='loginForm']/div[4]")));
 
         //get strings
         String getTitlePage=driver.getTitle();
@@ -92,8 +93,10 @@ public class TestSteps {
 
         WebDriver driver2 = driver;
         Actions act = new Actions(driver2); //hesabım menüsü açılması için
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='menuTitle']")));
 
         act.moveToElement(driver2.findElement(By.xpath("//*[@class='myAccountHolder customMenuItem hasMenu  withLocalization ']"))).perform(); ////hesabım menüsü açılması için
+
         //Get
         String getTitleMyAccount = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[1]")).getText();
         String getTitleMyName = driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[2]")).getText();
@@ -152,6 +155,8 @@ public class TestSteps {
         /////////////////////// 5.STEP
         System.out.println("-------Step 5-------");
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@class='resultText ']")));
+
         String getPageTitle = driver.getTitle();
         String getResultofSearch= driver.findElement(By.xpath("//*[@class='resultText ']")).getText();
 
@@ -171,7 +176,7 @@ public class TestSteps {
         List<WebElement> list=ul.findElements(By.className("column"));
 
 
-        //Sonuçlarda bazen başka markalar çıkabiliyor dolayısıyla bazı ürünler falsa dönüyor.
+        //Sonuçlarda bazen başka markalar çıkabiliyor dolayısıyla bazı ürünler false dönüyor.
         for(int i=1;i<list.size()+1;i++)
         {
             Boolean check= true;
@@ -214,6 +219,8 @@ public class TestSteps {
         String nameOfProduct = driver.findElement(By.xpath("//div[@id='view' and contains(@class,'listView')]/ul/li[3]/div/div/a")).getText(); //3. ürünün adı
         String nameOfFirm = driver.findElement(By.xpath("//div[@id='view' and contains(@class,'listView')]/ul/li[3]/div/a")).getText(); //3.ürünün frimasının adı
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='view' and contains(@class,'listView')]/ul/li[3]//*[@class='textImg followBtn']")));
+
         WebElement fav = driver.findElement(By.xpath("//div[@id='view' and contains(@class,'listView')]/ul/li[3]//*[@class='textImg followBtn']"));
         fav.click();
         System.out.println("--3.ürün için favorilere ekle'ye basıldı--");
@@ -222,10 +229,11 @@ public class TestSteps {
 
         /////////////////////// 8.STEP
         System.out.println("-------Step 8-------");
+
         driver.findElement(By.xpath("//*[@id='header']/div/div/div[2]/div[2]/div[2]/div[1]/a[1]")).click();
         System.out.println("--Hesabım'a tıklandı--");
 
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='myAccount']/div[1]/div[1]/div[2]/ul/li[12]/a")));
 
         //Get
         String getTitleOrder1 = driver.findElement(By.xpath("//*[@id='myAccount']/div[1]/div[1]/div[2]/ul/li[1]/a")).getText();
@@ -298,10 +306,11 @@ public class TestSteps {
         myFavorites.click();
         System.out.println("--Favorilerime tıklandı--");
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='myAccount']/div[3]/div[1]/h2")));
+
         String getTitleMyFavs = driver.getTitle();
         String getSubTitle = driver.findElement(By.xpath("//*[@id='myAccount']/div[3]/div[1]/h2")).getText();
 
-        // CLASS ACTIVE OLAYINI EKLEYEBİLİRİM
 
         try {
             Assert.assertEquals("Favorilerim - n11.com",getTitleMyFavs);
@@ -318,6 +327,8 @@ public class TestSteps {
 
         /////////////////////// 10.STEP
         System.out.println("-------Step 10-------");
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='view' and @class='listView']/ul/li/div/a")));
 
         String nameOfTheProductInFavs = driver.findElement(By.xpath("//div[@id='view' and @class='listView']/ul/li/div/div/a")).getText();
         String nameOfTheFırmInFavs = driver.findElement(By.xpath("//div[@id='view' and @class='listView']/ul/li/div/a")).getText();
@@ -342,6 +353,9 @@ public class TestSteps {
 
             WebElement deleteButton = driver.findElement(By.xpath("//div[@id='view' and @class='listView']/ul/li/div/div[3]/span"));
             deleteButton.click();
+
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[5]/div/div/span")));
+
             WebElement okeyButton = driver.findElement(By.xpath("/html/body/div[5]/div/div/span"));
             okeyButton.click();
             System.out.println("--Ürünü sil tuşuna basıldı--");
@@ -350,7 +364,7 @@ public class TestSteps {
             List<WebElement> elementList1 = driver.findElements(By.xpath("//div[@class='group listingGroup wishListGroup']/div"));
 
             if(elementList1.size()<2){
-                System.out.println("--Ürünün kaldırıldığı test edildi--");
+                System.out.println("--Ürünün kaldırıldığı test edildi--"); //ürünün favorilerimde olmadığını kanıtlıyor
             }
             else {
                 System.out.println("--Ürünün kaldırılamadı--");
