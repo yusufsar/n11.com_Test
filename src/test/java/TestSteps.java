@@ -84,9 +84,9 @@ public class TestSteps {
         WebElement pass = driver.findElement(By.xpath("//input[@id='password' and @name='password'] "));
         WebElement buttonMemberLogin = driver.findElement(By.xpath("//*[@id='loginButton']"));
 
-        id.sendKeys("yusufsar60@gmail.com");
+        id.sendKeys(""); //e-mail
         System.out.println("--Email is sent--");
-        pass.sendKeys("deneme1234");
+        pass.sendKeys(""); //password
         System.out.println("--Password is sent--");
         buttonMemberLogin.click();
 
